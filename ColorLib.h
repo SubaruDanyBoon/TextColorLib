@@ -169,6 +169,10 @@ namespace graphics
     std::string rainbowify_alternative_char(const char& c);
     // Returns a std::string that each character is another color from the rainbow using all static consts color predefined
     std::string rainbowify_alternative_string(const std::string& str);
+    // Returns a string preformatted with a GCode and auto resets the GCode at the end of the std::string
+    std::string get_graphic_text(const std::string& str, const GCode& gc);
+    // Returns a string preformatted with a Color and auto resets the GCode at the end of the std::string
+    std::string get_graphic_text(const std::string& str, const Color& c);
 };
 
 #endif

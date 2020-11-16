@@ -323,3 +323,15 @@ std::string graphics::rainbowify_alternative_string(const std::string& str)
     oss << RESET;
     return oss.str();
 }
+
+std::string graphics::get_graphic_text(const std::string& str, const GCode& gc)
+{
+    std::ostringstream oss;
+    oss << gc << str << RESET;
+    return oss.str();
+}
+
+std::string graphics::get_graphic_text(const std::string& str, const Color& c)
+{
+    return get_graphic_text(str, GCode{c});
+}
