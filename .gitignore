@@ -1,0 +1,5 @@
+Debug/
+Main.cpp
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
