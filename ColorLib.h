@@ -47,54 +47,52 @@ namespace graphics
     private:
         // Clamps a integer inbetween two uint8_t values
         static uint8_t clamp(const int& num, const uint8_t& lowerBound, const uint8_t& upperBound);
+
+    public:
+        // A Color object that is set to the color BLACK
+        static const Color BLACK;
+        // A Color object that is set to the color RED
+        static const Color RED;
+        // A Color object that is set to the color LIME
+        static const Color LIME;
+        // A Color object that is set to the color YELLOW
+        static const Color YELLOW;
+        // A Color object that is set to the color BLUE
+        static const Color BLUE;
+        // A Color object that is set to the color MAGENTA
+        static const Color MAGENTA;
+        // A Color object that is set to the color CYAN
+        static const Color CYAN;
+        // A Color object that is set to the color WHITE
+        static const Color WHITE;
+        // A Color object that is set to the color SILVER
+        static const Color SILVER;
+        // A Color object that is set to the color GRAY
+        static const Color GRAY;
+        // A Color object that is set to the color MAROON
+        static const Color MAROON;
+        // A Color object that is set to the color OLIVE
+        static const Color OLIVE;
+        // A Color object that is set to the color GREEN
+        static const Color GREEN;
+        // A Color object that is set to the color PURPLE
+        static const Color PURPLE;
+        // A Color object that is set to the color TEAL
+        static const Color TEAL;
+        // A Color object that is set to the color NAVY
+        static const Color NAVY;
+        // A Color object that is set to the color ORANGE
+        static const Color ORANGE;
+        // A Color object that is set to the color ORANGERED
+        static const Color ORANGERED;
+        // A Color object that is set to the color GOLD
+        static const Color GOLD;
+        // A Color object that is set to the color INDIGO
+        static const Color INDIGO;
+        // A Color object that is set to the color VIOLET
+        static const Color VIOLET;
     };
-
-    // A way of resetting GCode/Color iomanipulators
-    static const std::string RESET = "\033[0m";
-    // A Color object that is set to the color BLACK
-    static const Color BLACK{ 0, 0, 0 };
-    // A Color object that is set to the color RED
-    static const Color RED{ 255, 0, 0 };
-    // A Color object that is set to the color LIME
-    static const Color LIME{ 0, 255, 0 };
-    // A Color object that is set to the color YELLOW
-    static const Color YELLOW{ 255, 255 };
-    // A Color object that is set to the color BLUE
-    static const Color BLUE{ 0, 0, 255 };
-    // A Color object that is set to the color MAGENTA
-    static const Color MAGENTA{ 255, 0, 255 };
-    // A Color object that is set to the color CYAN
-    static const Color CYAN{ 0, 255, 255 };
-    // A Color object that is set to the color WHITE
-    static const Color WHITE{ 255, 255, 255 };
-    // A Color object that is set to the color SILVER
-    static const Color SILVER{ 192, 192, 192 };
-    // A Color object that is set to the color GRAY
-    static const Color GRAY{ 128, 128, 128 };
-    // A Color object that is set to the color MAROON
-    static const Color MAROON{ 128, 0, 0 };
-    // A Color object that is set to the color OLIVE
-    static const Color OLIVE{ 128, 128, 0 };
-    // A Color object that is set to the color GREEN
-    static const Color GREEN{ 0, 128, 0 };
-    // A Color object that is set to the color PURPLE
-    static const Color PURPLE{ 128, 0, 128 };
-    // A Color object that is set to the color TEAL
-    static const Color TEAL{ 0, 128, 128 };
-    // A Color object that is set to the color NAVY
-    static const Color NAVY{ 0, 0, 128 };
-    // A Color object that is set to the color ORANGE
-    static const Color ORANGE{ 255, 165, 0 };
-    // A Color object that is set to the color ORANGERED
-    static const Color ORANGERED{ 255, 69, 0 };
-    // A Color object that is set to the color GOLD
-    static const Color GOLD{ 255, 215, 0 };
-    // A Color object that is set to the color INDIGO
-    static const Color INDIGO{ 75, 0, 130 };
-    // A Color object that is set to the color VIOLET
-    static const Color VIOLET{ 238, 130, 238 };
-
-
+    
     /*
         Graphics Code for SGRs or Select Graphic Rendition attributes. They are used just like iomanipulators.
         Using the << operator before text it will change texts graphically to different colors or effects.
@@ -114,13 +112,13 @@ namespace graphics
         bool isBlinking;
 
     public:
-        GCode(const Color& _fgColor = BLACK, const std::optional<Color>& _bgColor = std::nullopt, const bool& _isBolded = false, const bool& _isFaint = false, const bool& _isItalicized = false, const bool& _isUnderlined = false, const bool& _isBlinking = false);
+        GCode(const Color& _fgColor = Color::BLACK, const std::optional<Color>& _bgColor = std::nullopt, const bool& _isBolded = false, const bool& _isFaint = false, const bool& _isItalicized = false, const bool& _isUnderlined = false, const bool& _isBlinking = false);
         // Sets the foreground's or text's color using a Color object
-        void set_foreground(const Color& color = BLACK);
+        void set_foreground(const Color& color = Color::BLACK);
         // Sets the foreground's or text's color using 8bit RGB values
         void set_foreground(const uint8_t& r = Color::MAX_VALUE, const uint8_t& g = Color::MAX_VALUE, const uint8_t& b = Color::MAX_VALUE);
         // Sets the background's color using a color object
-        void set_background(const Color& color = BLACK);
+        void set_background(const Color& color = Color::BLACK);
         // Sets the background's color using 8bit RGB values
         void set_background(const uint8_t& r = Color::MAX_VALUE, const uint8_t& g = Color::MAX_VALUE, const uint8_t& b = Color::MAX_VALUE);
         // toggles text being bolded
@@ -147,6 +145,10 @@ namespace graphics
     private:
         // Combines all attributes into a single std::string
         std::string get_code() const;
+
+    public:
+        // A way of resetting GCode/Color iomanipulators
+        static const std::string RESET;
     };
 
     // Used to send a Color code out to a output stream

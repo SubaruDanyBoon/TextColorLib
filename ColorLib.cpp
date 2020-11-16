@@ -76,6 +76,28 @@ std::string graphics::Color::to_string(const Color& c)
     return c.to_string();
 }
 
+const graphics::Color graphics::Color::BLACK{ 0, 0, 0 };
+const graphics::Color graphics::Color::RED{ 255, 0, 0 };
+const graphics::Color graphics::Color::LIME{ 0, 255, 0 };
+const graphics::Color graphics::Color::YELLOW{ 255, 255, 0 };
+const graphics::Color graphics::Color::BLUE{ 0, 0, 255 };
+const graphics::Color graphics::Color::MAGENTA{ 255, 0, 255 };
+const graphics::Color graphics::Color::CYAN{ 0, 255, 255 };
+const graphics::Color graphics::Color::WHITE{ 255, 255, 255 };
+const graphics::Color graphics::Color::SILVER{ 192, 192, 192 };
+const graphics::Color graphics::Color::GRAY{ 128, 128, 128 };
+const graphics::Color graphics::Color::MAROON{ 128, 0, 0 };
+const graphics::Color graphics::Color::OLIVE{ 128, 128, 0 };
+const graphics::Color graphics::Color::GREEN{ 0, 128, 0 };
+const graphics::Color graphics::Color::PURPLE{ 128, 0, 128 };
+const graphics::Color graphics::Color::TEAL{ 0, 128, 128 };
+const graphics::Color graphics::Color::NAVY{ 0, 0, 128 };
+const graphics::Color graphics::Color::ORANGE{ 255, 165, 0 };
+const graphics::Color graphics::Color::ORANGERED{ 255, 69, 0 };
+const graphics::Color graphics::Color::GOLD{ 255, 215, 0 };
+const graphics::Color graphics::Color::INDIGO{ 75, 0, 130 };
+const graphics::Color graphics::Color::VIOLET{ 238, 130, 238 };
+
 graphics::GCode::GCode(const Color& _fgColor, const std::optional<Color>& _bgColor, const bool& _isBolded, const bool& _isFaint, const bool& _isItalicized, const bool& _isUnderlined, const bool& _isBlinking)
     : fgColor{ _fgColor }, bgColor{ _bgColor }, isBolded{ _isBolded }, isFaint{ _isFaint }, isItalicized{ _isItalicized }, isUnderlined{ _isUnderlined }, isBlinking{ _isBlinking } {}
 
@@ -146,7 +168,7 @@ std::ostream& graphics::operator<<(std::ostream& os, const GCode& gc)
 
 std::string graphics::operator+(const GCode& gc, const std::string& str)
 {
-    return gc.get_code() + str + graphics::RESET;
+    return gc.get_code() + str + graphics::GCode::RESET;
 }
 
 std::string graphics::operator+(const std::string& str, const GCode& gc)
@@ -175,14 +197,16 @@ std::string graphics::GCode::get_debug_string(const GCode& gc)
     return oss.str();
 }
 
+const std::string graphics::GCode::RESET{"\033[0m"};
+
 void graphics::print_graphic_text(const std::string& str, const GCode& gc)
 {
-    std::cout << (gc + str + graphics::RESET);
+    std::cout << (gc + str + graphics::GCode::RESET);
 }
 
 void graphics::print_graphic_text(const std::string& str, const Color& c)
 {
-    std::cout << (GCode{ c } + str + graphics::RESET);
+    std::cout << (GCode{ c } + str + graphics::GCode::RESET);
 }
 
 void graphics::print_line_graphic_text(const std::string& str, const GCode& gc)
@@ -199,35 +223,13 @@ void graphics::print_line_graphic_text(const std::string& str, const Color& c)
 
 std::string graphics::rainbowify_char(const char& c)
 {
+    static const unsigned int SIZE{ 7 };
+    static const Color* colors[SIZE]{ &Color::RED, &Color::ORANGE, &Color::YELLOW, &Color::GREEN, &Color::BLUE, &Color::INDIGO, &Color::VIOLET };
     static uint8_t currColor = 0;
-    std::ostringstream oss;
-    switch (currColor++)
-    {
-    case 0:
-        oss << RED;
-        break;
-    case 1:
-        oss << ORANGE;
-        break;
-    case 2:
-        oss << YELLOW;
-        break;
-    case 3:
-        oss << GREEN;
-        break;
-    case 4:
-        oss << BLUE;
-        break;
-    case 5:
-        oss << INDIGO;
-        break;
-    case 6:
-        oss << VIOLET;
-        break;
-    default:
+    if (currColor == SIZE)
         currColor = 0;
-        oss << RED;
-    }
+    std::ostringstream oss;
+    oss << *colors[currColor++];
     oss << c;
     return oss.str();
 }
@@ -237,80 +239,19 @@ std::string graphics::rainbowify_string(const std::string& str)
     std::ostringstream oss;
     for (int i = 0; i < str.size(); ++i)
         oss << rainbowify_char(str[i]);
-    oss << RESET;
+    oss << GCode::RESET;
     return oss.str();
 }
 
 std::string graphics::rainbowify_alternative_char(const char& c)
 {
+    static const unsigned int SIZE{ 20 };
+    static const Color* colors[SIZE]{ &Color::RED, &Color::LIME, &Color::YELLOW, &Color::BLUE, &Color::MAGENTA, &Color::CYAN, &Color::WHITE, &Color::SILVER, &Color::GRAY, &Color::MAROON, &Color::OLIVE, &Color::GREEN, &Color::PURPLE, &Color::TEAL, &Color::NAVY, &Color::ORANGE, &Color::ORANGERED, &Color::GOLD, &Color::INDIGO, &Color::VIOLET };
     static uint8_t currColor = 0;
-    std::ostringstream oss;
-    switch (currColor++)
-    {
-    case 0:
-        oss << RED;
-        break;
-    case 1:
-        oss << LIME;
-        break;
-    case 2:
-        oss << YELLOW;
-        break;
-    case 3:
-        oss << BLUE;
-        break;
-    case 4:
-        oss << MAGENTA;
-        break;
-    case 5:
-        oss << CYAN;
-        break;
-    case 6:
-        oss << WHITE;
-        break;
-    case 7:
-        oss << SILVER;
-        break;
-    case 8:
-        oss << GRAY;
-        break;
-    case 9:
-        oss << MAROON;
-        break;
-    case 10:
-        oss << OLIVE;
-        break;
-    case 11:
-        oss << GREEN;
-        break;
-    case 12:
-        oss << PURPLE;
-        break;
-    case 13:
-        oss << TEAL;
-        break;
-    case 14:
-        oss << NAVY;
-        break;
-    case 15:
-        oss << ORANGE;
-        break;
-    case 16:
-        oss << ORANGERED;
-        break;
-    case 17:
-        oss << GOLD;
-        break;
-    case 18:
-        oss << INDIGO;
-        break;
-    case 19:
-        oss << VIOLET;
-        break;
-    default:
+    if (currColor == SIZE)
         currColor = 0;
-        oss << RED;
-    }
+    std::ostringstream oss;
+    oss << *colors[currColor++];
     oss << c;
     return oss.str();
 }
@@ -320,14 +261,14 @@ std::string graphics::rainbowify_alternative_string(const std::string& str)
     std::ostringstream oss;
     for (int i = 0; i < str.size(); ++i)
         oss << rainbowify_alternative_char(str[i]);
-    oss << RESET;
+    oss << GCode::RESET;
     return oss.str();
 }
 
 std::string graphics::get_graphic_text(const std::string& str, const GCode& gc)
 {
     std::ostringstream oss;
-    oss << gc << str << RESET;
+    oss << gc << str << GCode::RESET;
     return oss.str();
 }
 
