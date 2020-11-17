@@ -1,1 +1,1 @@
-A C++ library that allows to format text w/ colors and other attributes
+A C++ library that allows the formatting of text w/ colors and other attributes
