@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <vector>
 #include <algorithm>
 #include <optional>
 
@@ -98,7 +97,7 @@ namespace graphics
         Using the << operator before text it will change texts graphically to different colors or effects.
         WARNING: these are sticky manipulators so be sure to use graphics::reset on the output stream after use.
         Can also be used in accordance w/ print_graphic_text({GCode}) or print_line_graphic_text({GCode})
-        as parameters, but are not required
+        as parameters, but are not required 
     */
     class GCode
     {
